@@ -21,18 +21,18 @@ namespace RollUpExercise.helpers
             if (!productPrices.Contains(-1))
                 results.AddRange(productPrices);
             else
-               gtins.ForEach(g => g.Price = g.Price is null ? -1 : g.Price); 
+               gtins.ForEach(g => g.Price = g.Price == -1 ? null : g.Price); 
 
             return results;
         }
 
-        private static List<float> GetPriceExceptions<TKey,TElement>(IEnumerable<IGrouping<TKey,TElement>> group)
+        private static List<float> GetPriceExceptions<TKey,TElement>(IEnumerable<IGrouping<TKey,TElement>> groups)
             where TKey : Product
             where TElement : Product
-            => group.Select(pair =>
+            => groups.Select(group =>
                     {
-                        pair.Key.Price = pair.Min(g => g.Price);
-                        return pair.Select(g => g.Price ?? 0).Where(p => p != pair.Key.Price);
+                        group.Key.Price = group.Min(e => e.Price);
+                        return group.Select(e => e.Price ?? 0).Where(p => p != group.Key.Price);
                     })
                     .SelectMany(priceList => priceList)
                     .ToList();
