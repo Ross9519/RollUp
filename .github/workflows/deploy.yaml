@@ -19,7 +19,7 @@ jobs:
                     --username Ross9519 \
                     --password ${{secrets.TOKEN}} \
                     --store-password-in-clear-text \
-                    name github "https://nuget.pkg.github.com/Ross9519/index.json"
+                    --name github "https://nuget.pkg.github.com/Ross9519/index.json"
 
                 dotnet nuget push "RollUp/RollUp/bin/Release/RollUp.1.0.${{github.run_number}}.nupkg" \
                     --api-key ${{secrets.TOKEN}} \
